@@ -1,7 +1,7 @@
 <div class="container-fluid px-0" id="content">
     <nav class="navbar navbar-expand-lg navbar-dark " style="background: #ecf0f1;">
         
-    </style>
+
         <div class="container-fluid">
 
             <div id="sidebarCollapse" >

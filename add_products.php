@@ -1,5 +1,20 @@
  <?php
  include "includes/header.php";
+ $user->session_check();
+ if(isset($_POST['add'])){
+    $product = array("name"=>$_POST['product'],
+            "sku"=>$_POST['sku'],
+            "description"=>$_POST['description'],
+            "p_category"=>$_POST['category'],
+            "p_brand"=>$_POST['brand'],
+            "purchase_price"=>$_POST['purchase'],
+            "selling_price"=>$_POST['selling'],
+            "quantity"=>$_POST['quantity'],
+            "reorder_quantity"=>$_POST['reorder']
+            );
+    $db->insert_data("product", $product);
+  }
+
  ?>
  <div id="preloader">
         <div class="loader"></div>
@@ -20,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                  <button class="btn btn-lg btn-success float-right" type="submit">Save</button>  
+                  <input class="btn btn-lg btn-success float-right" name="add" value="Save Product" type="submit" form="add_product"> 
                 </div>
                  
                 
@@ -32,20 +47,20 @@
         <div class="main-content-inner mt-5">
             <div class="container-fluid">
                 <div class="col-lg-12">
-                     <form action="">
+                     <form action="" method="post" id="add_product">
                         <div class="row">
                              <div class="col-lg-6">
                                 <div class="form-group row p-2">
                                     <label for="username control-label" class="col-sm-4 col-form-label"><h6>Product Name</h6></label>
                                     <div class="col-sm-8">
-                                      <input type="text" class="form-control" id="username" name="username" >
+                                      <input type="text" class="form-control" id="product" name="product" >
                                     </div>
                                     
                                   </div>
                                 <div class="form-group row p-2">
                                    <label for="username control-label" class="col-sm-4 col-form-label"><h6>SKU</h6></label>
                                     <div class="col-sm-8">
-                                      <input type="text" class="form-control" id="username" name="username" >
+                                      <input type="text" class="form-control" id="sku" name="sku" >
                                     </div>
                                 </div>
                             </div>
@@ -73,24 +88,34 @@
                           <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-2 col-form-label"><h6>Description</h6></label>
                             <div class="col-sm-10">
-                              <textarea rows="6" name=""class="form-control" id="username" name="username" ></textarea> 
+                              <textarea rows="6" class="form-control" id="description" name="description" ></textarea> 
                             </div>
                           </div>
                           <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-2 col-form-label"><h6>Category</h6></label>
                             <div class="col-sm-4">
-                              <select class="form-control">
-                                <option>Select Category</option>
-                                <option>Large select</option>
-                                <option>Small select</option>
+                              <select class="form-control" name="category" id="category">
+                              <option value="">Select Category</option>
+                              <?php $categories = $db->fetch_data("product_category");
+                                    foreach($categories as $category){
+                                ?>                          
+                                <option value="<?php  echo $category['name']; ?>"><?php echo $category['name']; ?></option>
+                                <?php 
+                                  }
+                                 ?>
                             </select>
                             </div>
                             <label for="username control-label" class="col-sm-2 col-form-label"><h6>Brand</h6></label>
                             <div class="col-sm-4">
-                              <select class="form-control">
-                                <option>Select Category</option>
-                                <option>Large select</option>
-                                <option>Small select</option>
+                              <select class="form-control" name="brand" id="brand">
+                                <option value="">Select Brand</option>
+                                <?php $brands = $db->fetch_data("product_brand");
+                                    foreach($brands as $brand){
+                                ?>                          
+                                <option value="<?php echo $brand['name']; ?>"><?php echo $brand['name']; ?></option>
+                                <?php 
+                                  }
+                                 ?>
                             </select>
                             </div>
                           </div>
@@ -105,7 +130,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">PHP</span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <input type="text" name="purchase" id="purchase" class="form-control" aria-label="Amount (to the nearest dollar)">
                                     <div class="input-group-append">
                                         <span class="input-group-text">.00</span>
                                     </div>
@@ -117,7 +142,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">PHP</span>
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <input type="text" name="selling" id="selling" class="form-control" aria-label="Amount (to the nearest dollar)">
                                     <div class="input-group-append">
                                         <span class="input-group-text">.00</span>
                                     </div>
@@ -128,11 +153,11 @@
                           <div class="form-group row p-2">
                                 <label for="example-number-input" class="col-form-label col-sm-2">Quantity</label>
                                  <div class="col-sm-4">
-                                    <input class="form-control" type="number" value="42" id="example-number-input">
+                                    <input class="form-control" type="number" name="quantity" id="quantity">
                                 </div>
                                  <label for="example-number-input" class="col-form-label col-sm-2">Reorder Quantity</label>
                                  <div class="col-sm-4">
-                                    <input class="form-control" type="number" value="42" id="example-number-input">
+                                    <input class="form-control" type="number" name="reorder" id="reorder" id="example-number-input">
                                 </div>
                             </div>
 

@@ -1,5 +1,4 @@
-<?php 
-	include "core/init.php";
+<?php
 	unset($_SESSION['url']);
 
 	if (isset($_POST['submit'])) {

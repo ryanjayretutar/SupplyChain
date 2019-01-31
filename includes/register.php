@@ -1,5 +1,4 @@
 <?php 
-	include "core/init.php";
 	extract($_POST);
  	if(isset($_POST['submit'])){
 		$credentials = array("ucat_id"=>"4",

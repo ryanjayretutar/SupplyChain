@@ -1,8 +1,8 @@
 <?php 
-    include "core/init.php";
+    include "includes/header.php";
     $_SESSION['url'] = $_SERVER['REQUEST_URI']; 
     $user->session_check();
-    include "includes/header.php";
+
  ?>
 
           
