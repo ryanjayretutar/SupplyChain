@@ -38,17 +38,29 @@
      <script>
         $(document).ready(function(){
             $(".gets").click(function(){
-                $.post("product_data.php", {id : $(this).val()},
-                    function(data){
+                // $.post("core/ajax/product_data.php", {id : $(this).val()},
+                //     function(data){
+                //         $("#prod_content").html(data);
+                //     })
+                $.ajax({
+                    url: "core/ajax/product_data.php",
+                    data: {id : $(this).val()},
+                    method: "POST",
+                    success: function(data){
                         $("#prod_content").html(data);
-                    })
-
+                    }
+                })
             });
 
-        });
+            // $("#add_product").submit(function(event) {
+            //     event.preventDefault(    );
+            //       var data = $(this).serialize();
 
-        $("#edit").click(function() {
-           $('input[type=text]').removeAttr('readonly');
+            //     alert(data);
+
+            // });
+
+           
         });
     </script>
   </body>

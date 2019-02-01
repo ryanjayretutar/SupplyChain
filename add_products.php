@@ -36,6 +36,7 @@
                 </div>
                 <div class="col-sm-6">
                   <input class="btn btn-lg btn-success float-right" name="add" value="Save Product" type="submit" form="add_product"> 
+
                 </div>
                  
                 
@@ -158,12 +159,10 @@
                                  <label for="example-number-input" class="col-form-label col-sm-2">Reorder Quantity</label>
                                  <div class="col-sm-4">
                                     <input class="form-control" type="number" name="reorder" id="reorder" id="example-number-input">
+
                                 </div>
                             </div>
-
-
-                        
-                         
+  
                     </form>
                 </div>     
             </div>  

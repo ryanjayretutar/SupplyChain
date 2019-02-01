@@ -76,10 +76,8 @@
 				$sql .= $key . "='" . $value . "', ";
 			}
 
-			$sql = substr($sql, 0, -2); value . "' AND ";
+			$sql = substr($sql, 0, -2); $value . "' AND ";
 			$sql = "UPDATE ". $table . " SET " . $sql . " WHERE " . $condition;
-
-			echo $sql;
 			if (mysqli_query($this->con, $sql)) {
 				return true;
 			}

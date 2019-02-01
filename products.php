@@ -33,9 +33,9 @@
          <div class="main-content-inner mt-2">
             <div class="row">
                 <div class="col-lg-12">
-                	<div class="card" >
+                	<div class="card " >
                 		<div id="prod_content">
-                			<div class="card-body">
+                			
                                 <h4 class="header-title">Product List</h4>
                                 <div class="data-tables">
                                     <table id="dataTable" class="text-center">
@@ -68,7 +68,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
                 		</div>
                             
                     </div>
