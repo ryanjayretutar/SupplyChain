@@ -35,33 +35,4 @@
             });
         });
     </script>
-     <script>
-        $(document).ready(function(){
-            $(".gets").click(function(){
-                // $.post("core/ajax/product_data.php", {id : $(this).val()},
-                //     function(data){
-                //         $("#prod_content").html(data);
-                //     })
-                $.ajax({
-                    url: "core/ajax/product_data.php",
-                    data: {id : $(this).val()},
-                    method: "POST",
-                    success: function(data){
-                        $("#prod_content").html(data);
-                    }
-                })
-            });
-
-            // $("#add_product").submit(function(event) {
-            //     event.preventDefault(    );
-            //       var data = $(this).serialize();
-
-            //     alert(data);
-
-            // });
-
-           
-        });
-    </script>
-  </body>
-</html>
+     

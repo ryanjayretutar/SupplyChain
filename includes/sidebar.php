@@ -34,7 +34,7 @@
                      <i class="fas fa-image mr-5"></i>Sales</a>
                     <ul class="collapse list-unstyled" id="sales">
                          <li>
-                            <a href="products.php">Sales Order</a>
+                            <a href="sales_order.php">Sales Order</a>
                         </li>
                         <li>
                             <a href="add_products.php">Quotations</a>

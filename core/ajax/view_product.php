@@ -69,7 +69,7 @@ $product = $db->select_data("product",$prod_id);
       <div class="input-group-prepend">
         <span class="input-group-text">PHP</span>
       </div>
-      <label for="username control-label" class="col-form-label p-2"><h6><?php echo $product['selling_price']; ?></h6></label>
+      <label for="username control-label" class="col-form-label p-2"><h6><?php echo $product['purchase_price']; ?></h6></label>
       <div class="input-group-append">
         <span class="input-group-text">.00</span>
       </div>
@@ -81,7 +81,7 @@ $product = $db->select_data("product",$prod_id);
       <div class="input-group-prepend">
         <span class="input-group-text">PHP</span>
       </div>
-      <label for="username control-label" class="p-2 col-form-label"><h6><?php echo $product['purchase_price']; ?></h6></label>
+      <label for="username control-label" class="p-2 col-form-label"><h6><?php echo $product['selling_price']; ?></h6></label>
       <div class="input-group-append">
         <span class="input-group-text">.00</span>
       </div>

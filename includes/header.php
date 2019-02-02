@@ -18,15 +18,18 @@
     <!-- <link rel="stylesheet" href="assets/css/owl.carousel.min.css"> -->
     <!-- <link rel="stylesheet" href="assets/css/slicknav.min.css"> -->
     <!-- <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" /> -->
+     <link rel="stylesheet" href="assets/css/mobiscroll.jquery.min.css">
     <link rel="stylesheet" href="assets/css/typography.css">
     <link rel="stylesheet" href="assets/css/default-css.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script> -->
     <script src="assets/js/validation.js"></script>
-    <script src="assets/js/script.js"></script> 
-    <script src="assets/js/scripts.js"></script> 
+   
     <script src="assets/js/jquery-3.3.1.min.js"></script>
+     <script src="assets/js/script.js"></script> 
+    <script src="assets/js/scripts.js"></script> 
+    <script src="assets/js/mobiscroll.jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
