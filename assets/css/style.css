@@ -66,13 +66,13 @@ a, a:hover, a:focus {
     display: flex;
     width: 100%;
     align-items: stretch;
-    perspective: 1500px;
+    perspective: 1600px;
 }
 
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 245px;
+    max-width: 245px;
     background: #34495e;
     color: #fff;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
@@ -80,7 +80,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar.active {
-    margin-left: -250px;
+    margin-left: -245px;
     transform: rotateY(100deg);
 }
 
