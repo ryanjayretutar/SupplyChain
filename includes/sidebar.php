@@ -22,10 +22,10 @@
                             <a href="add_products.php">Add Products</a>
                         </li>
                         <li>
-                            <a href="#">Add Brands</a>
+                            <a href="brands.php">Brands</a>
                         </li>
                         <li>
-                            <a href="#">Add Category</a>
+                            <a href="categories.php">Category</a>
                         </li>
                     </ul>
                 </li>

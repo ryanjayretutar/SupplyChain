@@ -13,10 +13,10 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="breadcrumbs-area clearfix">
-                        <h4 class="page-title pull-left">Brands</h4>
+                        <h4 class="page-title pull-left">Categories</h4>
                         <ul class="breadcrumbs pull-left">
                             <li><a href="index.html">Home</a></li>
-                            <li><span>Brands</span></li>
+                            <li><span>Categories</span></li>
                         </ul>
                     </div>
                 </div>
@@ -31,20 +31,20 @@
                     <div class="card " >
                         <div id="prod_content">
                             
-                                <h4 class="header-title">Product List</h4>
+                                <h4 class="header-title">Category List</h4>
                                 <div class="data-tables">
                                     <table id="dataTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
                                                 <th><input type="checkbox"></th>
-                                                <th>Item Brands</th>
+                                                <th>Item Categories</th>
                                                 <th>Description</th>
                                                  <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $products = $db->fetch_data("product_brand");
+                                                $products = $db->fetch_data("product_category");
                                                 foreach($products as $product){
                                              ?>
                                             <tr>
@@ -52,7 +52,7 @@
                                                 <td><?php echo $product['name']; ?></td>
                                                 <td class="text-left"><?php echo $product['description']; ?></td>
                                                 <td><form action="" method="post">
-                                                    <a href="edit_brands.php?id=<?php echo $product['id']?>" class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="view_categories.php?id=<?php echo $product['id']?>" class="btn btn-sm btn-primary">Edit</a>
                                                 </form></td>
 
                                                

@@ -13,10 +13,10 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="breadcrumbs-area clearfix">
-                        <h4 class="page-title pull-left">Brands</h4>
+                        <h4 class="page-title pull-left">Customers</h4>
                         <ul class="breadcrumbs pull-left">
                             <li><a href="index.html">Home</a></li>
-                            <li><span>Brands</span></li>
+                            <li><span>Customers</span></li>
                         </ul>
                     </div>
                 </div>
@@ -25,37 +25,41 @@
         </div>
 
         <div class="main-content-inner">
-            <!-- MAIN CONTENT GOES HERE -->
-            <div class="row">
+              <div class="row mt-5">
                 <div class="col-lg-12">
                     <div class="card " >
                         <div id="prod_content">
                             
-                                <h4 class="header-title">Product List</h4>
+                                <h4 class="header-title">Customer List</h4>
                                 <div class="data-tables">
                                     <table id="dataTable" class="text-center">
                                         <thead class="bg-light text-capitalize">
                                             <tr>
                                                 <th><input type="checkbox"></th>
-                                                <th>Item Brands</th>
-                                                <th>Description</th>
-                                                 <th></th>
+                                                
+                                                <th>Customer #</th>
+                                                <th>Company Name</th>
+                                                <th>Contact Person</th>
+                                                <th>No. of Orders</th>
+                                                <th></th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                                $products = $db->fetch_data("product_brand");
-                                                foreach($products as $product){
+                                                $customers = $db->fetch_data("user_info");
+                                                foreach($customers as $customer){
+                                                    $get_c = array('user_id' => $customer['id']  );
+                                                    $contact = $db->select_data("user_contact", $get_c);
                                              ?>
                                             <tr>
                                                 <td><input type="checkbox"></td>
-                                                <td><?php echo $product['name']; ?></td>
-                                                <td class="text-left"><?php echo $product['description']; ?></td>
-                                                <td><form action="" method="post">
-                                                    <a href="edit_brands.php?id=<?php echo $product['id']?>" class="btn btn-sm btn-primary">Edit</a>
-                                                </form></td>
-
-                                               
+                                                <td><?php echo $customer['name']; ?></td>
+                                                <td class="text-left"><?php echo $customer['description']; ?></td>
+                                                <td><?php echo $contact['quantity']; ?></td>
+                                                <td><?php echo $customer['selling_price']; ?></td>
+                                                 <td><button type="button" class=" gets btn btn-sm btn-primary"  value="<?php echo $product['id']; ?>">Details</button></td>
+                                                
                                             </tr>
                                         <?php } ?>
                                         </tbody>
@@ -65,7 +69,7 @@
                             
                     </div>
                     </div>     
-            </div>
+            </div> 
         </div>
     </div>
       
@@ -74,31 +78,6 @@
           
     </div>
 <?php include "includes/footer.php"; ?>
-<script>
-        $(document).ready(function(){
-            $(".brand-get").click(function(){
-                // $.post("core/ajax/product_data.php", {id : $(this).val()},
-                //     function(data){
-                //         $("#prod_content").html(data);
-                //     })
-                $.load({
-                    url: "edit_brands.php?" + $(this).val(),
-                   
-                })
-            });
-
-            // $("#add_product").submit(function(event) {
-            //     event.preventDefault(    );
-            //       var data = $(this).serialize();
-
-            //     alert(data);
-
-            // });
-
-           
-        });
-
-    </script>
 
   </body>
 </html>
