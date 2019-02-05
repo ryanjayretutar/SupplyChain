@@ -1,5 +1,6 @@
 <?php 
     include "includes/header.php";
+    unset( $_SESSION['addresses']);
     $_SESSION['url'] = $_SERVER['REQUEST_URI']; 
     $user->session_check();
 
@@ -63,7 +64,7 @@
                             <div class="col-sm-5">
                                 <div class="d-flex flex-column row-hl">
                                     <label for="username control-label" class="item-hl col-form-label align-self-center"><h6>Credit Terms</h6></label>
-                                     <select class="item-hl form-control" name="category" id="category">
+                                     <select class="item-hl form-control" name="category" id="categorys">
                                           <option value="">Select Category</option>
                                           <?php $categories = $db->fetch_data("product_category");
                                                 foreach($categories as $category){
@@ -102,7 +103,7 @@
                             </li>
                         </ul>
                         <div class="tab-content mt-3" id="myTabContent">
-                            <div class="tab-pane fade show active" id="homes" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-pane fade show active" id="homes" role="tabpanel" aria-labelledby="home-tab">                    
                                 <div class="form-group row p-2">
                                     <div class="d-flex flex-column row-hl">
                                         <label for="username control-label" class="item-hl col-form-label"><h6>Type</h6></label>
@@ -111,7 +112,7 @@
                                               <?php $addresses = $db->fetch_data("address_category");
                                                     foreach($addresses as $address){
                                                 ?>                          
-                                                <option value="<?php  echo $category['name']; ?>"><?php echo $address['category']; ?></option>
+                                                <option value="<?php  echo $address['category']; ?>"><?php echo $address['category']; ?></option>
                                                 <?php 
                                                   }     
                                                  ?>
@@ -183,13 +184,16 @@
           $.ajax({
             type: 'post',
             url: 'core/ajax/addtoarray.php',
-            data: {home: $("#home").val(), street: $("#street").val(), barangay: $("#barangay").val(), city: $("#city").val(), postal: $("#postal").val()},
+            data: {category: $("#category option:selected").val(), home: $("#home").val(), street: $("#street").val(), barangay: $("#barangay").val(), city: $("#city").val(), postal: $("#postal").val()},
             success: function (data) {
               $("#homes").html(data);
             }
           });
 
         });
+
+
+
         });
     </script>
   </body>
