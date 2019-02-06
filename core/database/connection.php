@@ -45,8 +45,13 @@
 			$condition = substr($condition, 0, -5);
 			$sql .= "SELECT * FROM " . $table . " WHERE ". $condition;
 			$query = mysqli_query($this->con, $sql);
-			$row = mysqli_fetch_assoc($query);
-			return $row;
+			
+			if($query){
+				$row = mysqli_fetch_assoc($query);
+				return $row;
+			}else{
+				return false;
+			}
 		}
 
 		public function fetch_data_Many($table, $where){
@@ -97,6 +102,12 @@
 				return true;
 			}
 		}
+
+		/*Get last inserted id*/
+		public function get_last_id(){
+			return $this->con->insert_id;
+		}
+		/*End of get_last_id method*/
 
 	}
 

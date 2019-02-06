@@ -10,12 +10,6 @@
 		}
 		/*End of check_duplicate method*/
 
-		/*Get last inserted id*/
-		public function get_last_id(){
-			return $this->con->insert_id;
-		}
-		/*End of get_last_id method*/
-
 		/*Start of check login*/
 		public function check_login($user, $password){
 			$password = md5($password);

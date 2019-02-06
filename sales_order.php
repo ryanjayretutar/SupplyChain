@@ -75,7 +75,7 @@
   				<div class="form-group row p-2">
   					<div class="col-sm-3 d-flex flex-column row-hl">
   						<label for="username control-label" class="item-hl col-form-label"><h6>Sales Order #</h6></label>
-	  					<label for="username control-label" class="item-hl col-form-label"><p>SO00002131233</p></label>
+	  					 <input type="text" class="form-control form-control-sm" id="so_number" name="number" >
   					</div>
   					<div class="col-sm-3 d-flex flex-column row-hl">
   						<label for="username control-label" class="item-hl col-form-label"><h6>Order Date</h6></label>
@@ -90,22 +90,31 @@
   				<div class="form-group row p-2">
   					 <label for="username control-label" class="col-sm-3 col-form-label"><h6>Customer Name</h6></label>
   					 <div class="col-sm-6">
-  					 	<select class="custom-select">
+  					 	<select class="custom-select" id="customer_select">
 	                        <option selected="selected">Select a Customer</option>
-	                        <option value="1">One</option>
-	                        <option value="2">Two</option>
-	                        <option value="3">Three</option>
+                <?php $customers = $db->fetch_data("user_info"); ?>
+                <?php
+                      foreach($customers as $customer) {
+                        
+                     ?>
+                          <option value="<?php echo $customer['id']; ?>"><?php echo $customer['company_name']; ?></option>
+                        <?php } ?>
                    		</select>
   					 </div>
   				</div>
-  				<div class="form-group row p-2">
+  				<div class="form-group row p-2" id="all_addr">
   					<div class="col-sm-6 d-flex flex-column row-hl">
   					 <label for="username control-label" class=" col-form-label"><h6>Shipping Address</h6></label>
-  					  <button type="button" class="btn btn-flat btn-info btn-block">Select Shipping Address</button>
+             <div id="ship_addr">
+               <button type="button" class="btn btn-flat btn-info btn-block">Select Shipping Address</button>
+             </div>
+  					  
   					</div>
   					<div class="col-sm-6 d-flex flex-column row-hl">
   					   <label for="username control-label" class=" col-form-label"><h6>Billing Address</h6></label>
-  					  <button type="button" class="btn btn-flat btn-info btn-block">Select Billing Address</button>
+               <div id="bill_addr">
+  					       <button type="button" class="btn btn-flat btn-info btn-block">Select Billing Address</button>
+                 </div>
   					</div>
   				</div>
   				  <div class="col-12">
@@ -221,6 +230,19 @@
                 }
             });
         });
+
+         $(document).ready(function(){
+            $("#customer_select").change(function(event) {
+              $.ajax({
+                url: "core/ajax/get_address.php",
+                method: "POST",
+                data: {id :  $("#customer_select option:selected").val()},
+                success: function(data){
+                    $("#all_addr").html(data);
+                }
+              })
+            });
+         });
 
 	</script>
 

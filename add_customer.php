@@ -1,8 +1,53 @@
 <?php 
     include "includes/header.php";
-    unset( $_SESSION['addresses']);
+   
     $_SESSION['url'] = $_SERVER['REQUEST_URI']; 
     $user->session_check();
+
+    if(isset($_POST['customer_add'])){
+      $user_info = array("customer_no"=>$_POST['number'],
+                        "company_name"=>$_POST['company'],
+                        "website"=>$_POST['website'],
+                        "tax_num"=>$_POST['trn'],
+                        "credit_term"=>$_POST['terms'],
+                        "credit_limit"=>$_POST['limit']);
+      $db->insert_data("user_info", $user_info);
+
+      $_SESSION['c_id'] = $db->get_last_id();
+
+      foreach($_SESSION['addresses'] as $address){
+        foreach($address as $add){
+          $addr = array("user_id" =>$_SESSION['c_id'],
+                        "housenumber"=>$add['home'],
+                        "streetname"=>$add['street'],
+                        "barangay"=>$add['barangay'],
+                        "city"=>$add['city'],
+                        "postalcode"=>$add['postal'],
+                        "caddress"=>$add['category']);
+          $db->insert_data("address_tbl", $addr);
+        }
+      }
+
+      foreach($_SESSION['contacts'] as $contact){
+        foreach($contact as $con){
+          $cont = array("user_id" =>$_SESSION['c_id'],
+                        "firstname"=>$con['firstname'],
+                        "lastname"=>$con['lastname'],
+                        "designation"=>$con['designation'],
+                        "email"=>$con['email'],
+                        "mobile"=>$con['mobile'],
+                        "fax"=>$con['fax'],
+                        "office"=>$con['office']);
+          $db->insert_data("user_contact", $cont);
+        }
+      }
+
+       unset($_SESSION['addresses']);
+       unset($_SESSION['contacts']);
+       unset($_SESSION['c_id']);
+      
+    }
+
 
  ?>
 
@@ -22,11 +67,15 @@
                         </ul>
                     </div>
                 </div>
+                 <div class="col-sm-6">
+                  <input class="btn btn-lg btn-success float-right" name="customer_add" value="Save Customer" type="submit" form="add_customer"> 
+
+                </div>
                 
             </div>
         </div>
 
-        <div class="main-content-inner">
+        <div class="main-content-inner mt-5">
             <!-- MAIN CONTENT GOES HERE -->
             <div class="container-fluid">
                 <form action="" method="post" class="row" id="add_customer">
@@ -34,28 +83,28 @@
                         <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-3 col-form-label"><h6>Customer Number</h6></label>
                             <div class="col-sm-8">
-                             <label for="username control-label" class=" col-form-label"><h6>CU0054254</h6></label>
+                             <input type="text" class="form-control form-control-sm" id="number" name="number" >
                             </div>
                             
                           </div>
                           <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-3 col-form-label"><h6>Company Name</h6></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control form-control-sm" id="product" name="product" >
+                              <input type="text" class="form-control form-control-sm" id="company" name="company" >
                             </div>
                             
                           </div>
                            <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-3 col-form-label"><h6>Website</h6></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control form-control-sm" id="product" name="product" >
+                              <input type="text" class="form-control form-control-sm" id="website" name="website" >
                             </div>
                             
                           </div>
                            <div class="form-group row p-2">
                             <label for="username control-label" class="col-sm-3 col-form-label"><h6>Tax Registration Number</h6></label>
                             <div class="col-sm-8">
-                              <input type="text" class="form-control form-control-sm" id="product" name="product" >
+                              <input type="text" class="form-control form-control-sm" id="trn" name="trn" >
                             </div>
                             
                           </div>
@@ -63,13 +112,13 @@
                             <label for="username control-label" class="col-sm-3 col-form-label"><h6>Credit Terms</h6></label>
                             <div class="col-sm-5">
                                 <div class="d-flex flex-column row-hl">
-                                    <label for="username control-label" class="item-hl col-form-label align-self-center"><h6>Credit Terms</h6></label>
-                                     <select class="item-hl form-control" name="category" id="categorys">
-                                          <option value="">Select Category</option>
-                                          <?php $categories = $db->fetch_data("product_category");
-                                                foreach($categories as $category){
+                                    <label for="username control-label" class="item-hl col-form-label align-self-center"><h6>Default Credit Terms</h6></label>
+                                     <select class="item-hl form-control" name="terms" id="categorys">
+                                          <option value="">Select Terms</option>
+                                          <?php $terms = $db->fetch_data("credit_terms");
+                                                foreach($terms as $term){
                                             ?>                          
-                                            <option value="<?php  echo $category['name']; ?>"><?php echo $category['name']; ?></option>
+                                            <option value="<?php  echo $term['terms']; ?>"><?php echo $term['terms']; ?></option>
                                             <?php 
                                               }     
                                              ?>
@@ -79,12 +128,12 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="d-flex flex-column row-hl">
-                                <label for="username control-label" class="item-hl col-form-label align-self-center"><h6>Credit Terms</h6></label>
+                                <label for="username control-label" class="item-hl col-form-label align-self-center"><h6>Credit Limit</h6></label>
                                  <div class="input-group mb-3 item-hl">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">PHP</span>
                                     </div>
-                                    <input type="text" name="purchase" id="purchase" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <input type="text" name="limit" id="limit" class="form-control" aria-label="Amount (to the nearest dollar)">
                                   
                                 </div>
                             </div>
@@ -156,12 +205,67 @@
                                     </div>
                                 </div>
                                 <div class="form-group ">
-                                  <button class="btn btn-lg btn-success float-right" name="add" type="button" id="addtoarr">Save Address</button>
+                                  <button class="btn btn-sm btn-success float-right" name="add" type="button" id="addtoarr">Save Address</button>
 
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta soluta doloribus, ullam, ut obcaecati laboriosam eos, officia dolores voluptatum quas impedit placeat cumque animi quos odio quibusdam voluptatibus magnam minima facilis necessitatibus libero! Error velit veritatis veniam ipsa? Reiciendis quas qui neque atque repudiandae quidem incidunt, a consectetur ipsam impedit.</p>
+                                <div class="form-group row">
+                                    <div class="d-flex flex-column row-hl col-md-12">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Designation</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="designation" name="designation" >
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                    <div class="d-flex flex-column row-hl col-md-6">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Last Name</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="lname" name="lname" >
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column row-hl col-md-6">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>First Name</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="fname" name="fname" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="d-flex flex-column row-hl col-md-12">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Email</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="email" name="email" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="d-flex flex-column row-hl col-md-6">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Mobile</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="mobile" name="mobile" >
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column row-hl col-md-6">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Fax</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="fax" name="fax" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="d-flex flex-column row-hl col-md-12">
+                                        <label for="username control-label" class="item-hl col-form-label"><h6>Office</h6></label>
+                                         <div class="item-hl">
+                                          <input type="text" class="form-control form-control-sm" id="office" name="office" >
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="form-group ">
+                                  <button class="btn btn-sm btn-success float-right" name="add" type="button" id="addContact">Save Contact</button>
+
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -177,20 +281,26 @@
 <?php include "includes/footer.php"; ?>
     <script>
         $(document).ready(function(){
-                 $('#addtoarr').on('click', function () {
-
-        
-
-          $.ajax({
-            type: 'post',
-            url: 'core/ajax/addtoarray.php',
-            data: {category: $("#category option:selected").val(), home: $("#home").val(), street: $("#street").val(), barangay: $("#barangay").val(), city: $("#city").val(), postal: $("#postal").val()},
-            success: function (data) {
-              $("#homes").html(data);
-            }
-          });
-
-        });
+          $('#addtoarr').on('click', function () {
+            $.ajax({
+                  type: 'post',
+                  url: 'core/ajax/addtoarray.php',
+                  data: {category: $("#category option:selected").val(), home: $("#home").val(), street: $("#street").val(), barangay: $("#barangay").val(), city: $("#city").val(), postal: $("#postal").val()},
+                  success: function (data) {
+                    $("#homes").html(data);
+                  }
+              });
+            });
+          $('#addContact').on('click', function () {
+            $.ajax({
+                  type: 'post',
+                  url: 'core/ajax/add_contact.php',
+                  data: {designation: $("#designation").val(), lname: $("#lname").val(), fname: $("#fname").val(), email: $("#email").val(), mobile: $("#mobile").val(), fax: $("#fax").val(), office: $("#office").val()},
+                  success: function (data) {
+                    $("#contact").html(data);
+                  }
+              });
+            });
 
 
 

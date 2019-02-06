@@ -54,11 +54,11 @@
                                              ?>
                                             <tr>
                                                 <td><input type="checkbox"></td>
-                                                <td><?php echo $customer['name']; ?></td>
-                                                <td class="text-left"><?php echo $customer['description']; ?></td>
-                                                <td><?php echo $contact['quantity']; ?></td>
-                                                <td><?php echo $customer['selling_price']; ?></td>
-                                                 <td><button type="button" class=" gets btn btn-sm btn-primary"  value="<?php echo $product['id']; ?>">Details</button></td>
+                                                <td><?php echo $customer['customer_no']; ?></td>
+                                                <td><?php echo $customer['company_name']; ?></td>
+                                                <td class="text-left"><?php echo $contact['designation'] . " " . $contact['firstname'] . " " . $contact['lastname'] ; ?></td>
+                                                <td>0</td>
+                                                 <td><button type="button" class=" gets btn btn-sm btn-primary"  value="<?php echo $customer['id']; ?>">Details</button></td>
                                                 
                                             </tr>
                                         <?php } ?>

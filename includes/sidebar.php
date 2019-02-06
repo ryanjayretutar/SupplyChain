@@ -12,6 +12,18 @@
                      <i class="fas fa-home mr-5"></i>Dashboard</a>
                 </li>
                 <li>
+                    <a href="#customer" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                     <i class="fas fa-image mr-5"></i>Customers</a>
+                    <ul class="collapse list-unstyled" id="customer">
+                         <li>
+                            <a href="customer.php">Customers' List</a>
+                        </li>
+                        <li>
+                            <a href="add_customer.php">Add New Customer</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                      <i class="fas fa-image mr-5"></i>Products</a>
                     <ul class="collapse list-unstyled" id="product">
