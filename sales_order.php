@@ -138,29 +138,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              <tr id="dim-main-row">
+                                              <tr id="dim-main-row" class="trow">
 
                                                 <td>
                                                          <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger btn-sm deldimrow " style="width: 40px"><i class="fa fa-remove"></i></button></a>
                                                     </td>
                                                 <td>
-													 <select class="custom-select">
-		                                                <option selected="selected">Open this select menu</option>
-		                                                <option value="1">One</option>
-		                                                <option value="2">Two</option>
-		                                                <option value="3">Three</option>
+													                      <select class="custom-select select_product" >
+                                                  <option selected="selected">Select a product </option>
+                                                  <?php $products = $db->fetch_data("product");
+                                                        foreach ($products as $product) {
+                                                          # code...
+                                                        
+                                                   ?>
+		                                                
+		                                                <option value="<?php echo $product['id']; ?>"><?php echo $product['name']; ?></option>		                                               
+                                                  <?php } ?>
 		                                            </select>
                                                 </td>
-                                                <td><label for="example-number-input" class="col-form-label">19000</label></td>
-                                                <td>  <input class="form-control" type="number" value="42" id="example-number-input"></td>
-                                                <td> <input class="form-control" type="number" value="42" id="example-number-input"></td>
+                                                <td><label for="example-number-input" class="col-form-label price">19000</label></td>
+                                                <td>  <input class="form-control qty" type="number" value="0"></td>
+                                                <td> <input class="form-control" type="number" value="0" id="example-number-input" class="discount"></td>
                                                 <td> <select class="custom-select">
 		                                                <option selected="selected">Open this select menu</option>
 		                                                <option value="1">One</option>
 		                                                <option value="2">Two</option>
 		                                                <option value="3">Three</option>
 		                                            </select></td>
-                                                <td><label for="example-number-input" class="col-form-label">19000</label></td>
+                                                <td><label for="example-number-input" class="col-form-label totalRow">19000</label></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -242,6 +247,37 @@
                 }
               })
             });
+
+            $(".select_product").change(function(event) {
+              var row = $(this).parent().parent();
+              $.ajax({
+                url: "core/ajax/get_product.php",
+                method: "POST",
+                dataType: 'json',
+                cache: false,
+                data: {id :  row.find(".select_product option:selected").val()},
+                success: function(data){
+                    row.find(".qty").attr({
+                      max: data.quantity,
+                      min: 0,
+                      value: 0
+                    });
+                    row.find(".price").html(data.price);
+                }
+              })
+            });
+
+            $("tbody").delegate('.qty','.disc', 'keyup', function(event) {
+              
+                var row = $(this).parent().parent();
+                var price = row.find('.price').val();
+                var qty = row.find('.qty').val();
+                var disc = row.find('.discount').val();
+                var totalRow = (price * qty) * (disc / 100); 
+                row.find('.totalRow').html(totalRow);
+                alert(totalRow);
+                         });
+            
          });
 
 	</script>
