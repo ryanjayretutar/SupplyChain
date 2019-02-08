@@ -133,8 +133,8 @@
                                                 <th scope="col" width="10%">Unit Price</th>
                                                 <th scope="col" width="10%">Qty</th>
                                                 <th scope="col" width="10%">Discount (%)</th>
-                                                <th scope="col" width="20%">Tax</th>
-                                                <th scope="col" width="20%">Total</th>
+                                                <th scope="col" width="25%">Tax</th>
+                                                <th scope="col" width="15%">Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -144,7 +144,7 @@
                                                          <a href='javascript:void(0);'  class='remove'><button type="button" class="btn btn-danger btn-sm deldimrow " style="width: 40px"><i class="fa fa-remove"></i></button></a>
                                                     </td>
                                                 <td>
-													                      <select class="custom-select select_product" >
+													                      <select name="product[]" class="custom-select select_product" >
                                                   <option selected="selected">Select a product </option>
                                                   <?php $products = $db->fetch_data("product");
                                                         foreach ($products as $product) {
@@ -156,16 +156,16 @@
                                                   <?php } ?>
 		                                            </select>
                                                 </td>
-                                                <td><label for="example-number-input" class="col-form-label price">19000</label></td>
+                                                <td><input readonly="true" class="form-control price"></td>
                                                 <td>  <input class="form-control qty" type="number" value="0"></td>
-                                                <td> <input class="form-control" type="number" value="0" id="example-number-input" class="discount"></td>
-                                                <td> <select class="custom-select">
-		                                                <option selected="selected">Open this select menu</option>
-		                                                <option value="1">One</option>
-		                                                <option value="2">Two</option>
-		                                                <option value="3">Three</option>
+                                                <td> <input class="form-control discount" type="number"  id="example-number-input" ></td>
+                                                <td> <select name="tax"  class="custom-select tax">
+		                                                <option selected="selected">Select Tax</option>
+		                                                <option value="0">None</option>
+		                                                <option value="12">Value Added Tax (12%)</option>
+		                                                
 		                                            </select></td>
-                                                <td><label for="example-number-input" class="col-form-label totalRow">19000</label></td>
+                                                <td><input readonly="true" class="form-control totalRow"></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -177,20 +177,10 @@
                                                 <table class="table">
                                                     <tbody>
                                                     <tr>
-                                                        <td>Sub Total</td>
-                                                        <td class="text-right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>TAX (12%)</td>
-                                                        <td class="text-right tax"></td>
-                                                    </tr>
-                                                    <tr>
                                                         <td class="text-bold-800">Total</td>
-                                                        <td class="text-bold-800 text-right total"></td>
+                                                        <td class="text-bold-800 text-right totalval"></td>
                                                     </tr>
-                                                    <input type="hidden" name="subtotals" value="" id="mySub">
-                                                    <input type="hidden" name="taxes" value="" id="myTax">
-                                                    <input type="hidden" name="mytotals" value="" id="myTotal">
+                                                    <input type="hidden" name="totalValue" value="" id="myTotal">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -237,6 +227,8 @@
         });
 
          $(document).ready(function(){
+
+            $("input[readonly='true']").css('backgroundColor', 'white');;
             $("#customer_select").change(function(event) {
               $.ajax({
                 url: "core/ajax/get_address.php",
@@ -262,22 +254,34 @@
                       min: 0,
                       value: 0
                     });
-                    row.find(".price").html(data.price);
+                    row.find(".price").val(data.price);
                 }
               })
             });
 
-            $("tbody").delegate('.qty','.disc', 'keyup', function(event) {
-              
+            $(".qty, .discount, .tax, .select_product").on('keyup, change', function(event){
+
                 var row = $(this).parent().parent();
                 var price = row.find('.price').val();
                 var qty = row.find('.qty').val();
                 var disc = row.find('.discount').val();
-                var totalRow = (price * qty) * (disc / 100); 
-                row.find('.totalRow').html(totalRow);
-                alert(totalRow);
-                         });
-            
+                var tax = row.find('.tax').val();
+                var discount = disc / 100;
+                var total = (price * qty);
+                var totalDiscount = total * discount;
+                var discounted = total - totalDiscount;
+                var totalRow = discounted + (discounted * (tax/100));  
+                row.find('.totalRow').val(totalRow);
+                 var total=0;
+               $('.totalRow').each(function (i,e) {
+                    var rowTotal = $(this).val()-0;
+                    total += rowTotal;
+                });
+               $(".totalval").text(total);
+              
+                // alert(discount);
+            });
+
          });
 
 	</script>
